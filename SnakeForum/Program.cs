@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SnakeForum.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<SnakeForumContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SnakeForumContext") ?? throw new InvalidOperationException("Connection string 'SnakeForumContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
