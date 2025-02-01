@@ -34,7 +34,9 @@ namespace SnakeForum.Controllers
             }
 
             var discussion = await _context.Discussion
+                .Include(d => d.Comments) // Load related comments
                 .FirstOrDefaultAsync(m => m.DiscussionId == id);
+
             if (discussion == null)
             {
                 return NotFound();
@@ -42,6 +44,7 @@ namespace SnakeForum.Controllers
 
             return View(discussion);
         }
+
 
         // GET: Discussions/Create
         public IActionResult Create()
