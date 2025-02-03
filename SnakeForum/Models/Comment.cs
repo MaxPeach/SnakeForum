@@ -4,8 +4,8 @@
     {
         //primary key
         public int CommentId { get; set; }
-        public string Content { get; set; }
-        public string Author { get; set; }
+        public string Content { get; set; } = string.Empty;
+        public string Author { get; set; } = string.Empty;
         public DateTime CommentDate { get; set; }
 
         // Foreign Key
