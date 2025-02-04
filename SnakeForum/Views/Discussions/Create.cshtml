@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create A New </h1>
 
 <h4>Discussion</h4>
 <hr />
@@ -42,11 +42,13 @@
             </div>
         </form>
     </div>
+    <div>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to List</a>
+
+    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{

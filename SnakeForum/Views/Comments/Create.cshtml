@@ -6,7 +6,7 @@
 
 <h2>Add a Comment</h2>
 
-<form asp-action="Create">
+<form asp-action="CreateComment" asp-controller="Comments" method="post">
     <div class="form-group">
         <label asp-for="Content" class="control-label"></label>
         <textarea asp-for="Content" class="form-control" rows="4"></textarea>
@@ -24,7 +24,8 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<a asp-controller="Discussions" asp-action="Details" asp-route-id="@Model.DiscussionId">Back to Discussion</a>
+<a asp-action="GetDiscussion" asp-controller="Discussions" asp-route-id="@Model.DiscussionId">Back to Discussion</a>
+
 
 @section Scripts {
     @{

@@ -16,8 +16,8 @@ namespace SnakeForum.Controllers
             _context = context;
         }
 
-        // GET: Comments/Create
-        public IActionResult Create(int discussionId)
+        // ✅ GET: Comments/CreateComment
+        public IActionResult CreateComment(int discussionId)
         {
             var comment = new Comment
             {
@@ -27,21 +27,22 @@ namespace SnakeForum.Controllers
             return View(comment);
         }
 
-
-        // POST: Comments/Create
+        // ✅ POST: Comments/CreateComment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Content,Author,DiscussionId")] Comment comment)
+        public async Task<IActionResult> CreateComment([Bind("Content, Author, DiscussionId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                comment.CommentDate = DateTime.Now; // Set the timestamp
-                _context.Add(comment);
+                comment.CommentDate = DateTime.Now;
+
+                // ✅ Ensure you're using the correct DbSet
+                _context.Comment.Add(comment);
                 await _context.SaveChangesAsync();
 
-                // Redirect to the Get Discussion page
-                return RedirectToAction("Details", "Discussions", new { id = comment.DiscussionId });
+                return RedirectToAction("GetDiscussion", "Discussions", new { id = comment.DiscussionId });
             }
+
             return View(comment);
         }
     }

@@ -4,29 +4,46 @@ using SnakeForum.Models;
 
 namespace SnakeForum.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using SnakeForum.Data;
+    using SnakeForum.Models;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly SnakeForumContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SnakeForumContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // ? Home Page - Show All Discussions
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var discussions = await _context.Discussion
+                .Include(d => d.Comments)  // Include comments to count them
+                .OrderByDescending(d => d.CreateDate) // Sort by newest first
+                .ToListAsync();
+
+            return View(discussions);
         }
 
-        public IActionResult Privacy()
+        // ? GetDiscussion Page - Show Discussion Details
+        public async Task<IActionResult> GetDiscussion(int id)
         {
-            return View();
-        }
+            var discussion = await _context.Discussion
+                .Include(d => d.Comments) // Include related comments
+                .FirstOrDefaultAsync(d => d.DiscussionId == id);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (discussion == null)
+            {
+                return NotFound();
+            }
+
+            return View(discussion);
         }
     }
 }

@@ -1,0 +1,58 @@
+﻿@model SnakeForm.Models.Discussion
+
+@{
+    ViewData["Title"] = "Discussion Details";
+}
+
+<div>
+    <h1>@Model.Title</h1>
+    <p>@Model.Content</p>
+
+    <h4>Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Image:</dt>
+        <dd class="col-sm-10">
+            <img src="@Url.Content("/images/" + Model.ImageFilename)" alt="Discussion Image" style="max-width: 100%; height: auto;" />
+        </dd>
+
+        <dt class="col-sm-2">Created At:</dt>
+        <dd class="col-sm-10">
+            @Model.CreateDate.ToString("MMMM dd, yyyy h:mm tt")
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <div class="mt-4">
+        <a asp-action="AddComment" asp-route-id="@Model.DiscussionId" class="btn btn-secondary">Add comments</a>
+    </div>
+
+    <h4>Comments</h4>
+    <hr />
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        <ul class="list-group">
+            @foreach (var comment in Model.Comments)
+            {
+
+                <li class="list-group-item">
+                    <p><strong>@comment.Author:</strong> @comment.Content</p>
+                    <p class="text-muted small">@comment.CommentDate.ToString("MMMM dd, yyyy h:mm tt")</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet. Be the first to comment!</p>
+    }
+</div>
+
+
+
+<div class="mt-4">
+    
+    <a asp-action="Edit" asp-route-id="@Model.DiscussionId" class="btn btn-warning">Edit Discussion</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

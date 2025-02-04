@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SnakeForm.Models;
 using SnakeForum.Data;
@@ -25,26 +25,28 @@ namespace SnakeForum.Controllers
             return View(await _context.Discussion.ToListAsync());
         }
 
-        // GET: Discussions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Discussions/GetDiscussion/5
+        public async Task<IActionResult> GetDiscussion(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            // Retrieve the discussion with the specified ID, including related comments
             var discussion = await _context.Discussion
-                .Include(d => d.Comments) // Load related comments
-                .FirstOrDefaultAsync(m => m.DiscussionId == id);
+                .Include(d => d.Comments) // Include related comments
+                .FirstOrDefaultAsync(d => d.DiscussionId == id);
 
+            // Check if the discussion exists
             if (discussion == null)
             {
                 return NotFound();
             }
 
+            // Order comments by creation date in descending order
+            discussion.Comments = discussion.Comments
+                .OrderByDescending(c => c.CommentDate)
+                .ToList();
+
+            // Pass the discussion to the view
             return View(discussion);
         }
-
 
         // GET: Discussions/Create
         public IActionResult Create()
@@ -53,13 +55,11 @@ namespace SnakeForum.Controllers
         }
 
         // POST: Discussions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DiscussionId,Title,Content,ImageFile,CreateDate")] Discussion discussion)
         {
-            // rename the uploaded file to a guid (unique filename). Set before photo saved in database.
+            // Rename the uploaded file to a unique filename (GUID)
             discussion.ImageFilename = Guid.NewGuid().ToString() + Path.GetExtension(discussion.ImageFile?.FileName);
 
             if (ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace SnakeForum.Controllers
                 _context.Add(discussion);
                 await _context.SaveChangesAsync();
 
-                //save the uploaded file after the photo is saved in the database.
+                // Save the uploaded file after saving the discussion to the database
                 if (discussion.ImageFile != null)
                 {
                     string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", discussion.ImageFilename);
@@ -76,7 +76,7 @@ namespace SnakeForum.Controllers
                         await discussion.ImageFile.CopyToAsync(fileStream);
                     }
                 }
-                return RedirectToAction(nameof(Index));  
+                return RedirectToAction(nameof(Index));
             }
             return View(discussion);
         }
@@ -98,8 +98,6 @@ namespace SnakeForum.Controllers
         }
 
         // POST: Discussions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DiscussionId,Title,Content,ImageFilename,CreateDate")] Discussion discussion)
@@ -170,4 +168,5 @@ namespace SnakeForum.Controllers
             return _context.Discussion.Any(e => e.DiscussionId == id);
         }
     }
+
 }
