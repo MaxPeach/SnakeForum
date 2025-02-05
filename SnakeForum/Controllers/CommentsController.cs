@@ -17,11 +17,11 @@ namespace SnakeForum.Controllers
         }
 
         // ✅ GET: Comments/CreateComment
-        public IActionResult CreateComment(int discussionId)
+        public IActionResult Create(int Id)
         {
             var comment = new Comment
             {
-                DiscussionId = discussionId
+                DiscussionId = Id
             };
 
             return View(comment);
@@ -40,7 +40,7 @@ namespace SnakeForum.Controllers
                 _context.Comment.Add(comment);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("GetDiscussion", "Discussions", new { id = comment.DiscussionId });
+                return RedirectToAction("GetDiscussion", "Home", new { id = comment.DiscussionId });
             }
 
             return View(comment);

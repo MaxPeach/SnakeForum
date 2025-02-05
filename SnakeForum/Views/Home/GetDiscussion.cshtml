@@ -25,7 +25,7 @@
 
 <div>
     <div class="mt-4">
-        <a asp-action="AddComment" asp-route-id="@Model.DiscussionId" class="btn btn-secondary">Add comments</a>
+        <a asp-controller="Comments" asp-action="Create" asp-route-id="@Model.DiscussionId" class="btn btn-warning">Add Comment</a>
     </div>
 
     <h4>Comments</h4>
@@ -53,6 +53,6 @@
 
 <div class="mt-4">
     
-    <a asp-action="Edit" asp-route-id="@Model.DiscussionId" class="btn btn-warning">Edit Discussion</a>
+    
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

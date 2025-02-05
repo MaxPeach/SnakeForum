@@ -4,41 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Discussions</h1>
-<hr />
+<h1>Index</h1>
 
-<div class="row">
-    @foreach (var discussion in Model)
-    {
-        <div class="col-md-12 mb-3">
-            <div class="card">
-                <div class="row no-gutters">
-                    <!-- Image Thumbnail -->
-                    <div class="col-md-2">
-                        <img src="~/uploads/@discussion.ImageFilename" class="img-thumbnail" alt="Discussion Image" width="100" height="100">
-                    </div>
-
-                    <!-- Discussion Details -->
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <!-- Clickable Title -->
-                            <h5 class="card-title">
-                                <a asp-action="GetDiscussion" asp-route-id="@discussion.DiscussionId">@discussion.Title</a>
-                            </h5>
-                            
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Created on: @discussion.CreateDate.ToString("MMMM dd, yyyy HH:mm")
-                                </small>
-                            </p>
-
-                            <p class="card-text">
-                                <strong>@discussion.Comments?.Count() comments</strong>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageFilename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageFilename)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DiscussionId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.DiscussionId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DiscussionId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -26,7 +26,7 @@ namespace SnakeForum.Controllers
         }
 
         // GET: Discussions/GetDiscussion/5
-        public async Task<IActionResult> GetDiscussion(int id)
+        public async Task<IActionResult> Details(int id)
         {
             // Retrieve the discussion with the specified ID, including related comments
             var discussion = await _context.Discussion
@@ -39,10 +39,7 @@ namespace SnakeForum.Controllers
                 return NotFound();
             }
 
-            // Order comments by creation date in descending order
-            discussion.Comments = discussion.Comments
-                .OrderByDescending(c => c.CommentDate)
-                .ToList();
+           
 
             // Pass the discussion to the view
             return View(discussion);
