@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SnakeForum.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Use flex-column to take full height -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -23,27 +24,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Discussions" asp-action="Index">Home</a>
                         </li>
-         
-                        
-                        <li class="nav-item">
-                            
-                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container flex-grow-1">
         <main role="main" class="pb-3">
-            @RenderBody()
+            @RenderBody() <!-- Your page content goes here -->
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-           
-        </div>
-    </footer>
+    <!-- Only render footer if we are not on the 'GetDiscussion' page -->
+    @if (ViewData["HideFooter"] == null || (ViewData["HideFooter"] as string) != "true")
+    {
+        <footer class="border-top footer text-muted mt-auto py-3">
+            <div class="container">
+                <span>© 2025 SnakeForum. All rights reserved.</span>
+            </div>
+        </footer>
+    }
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

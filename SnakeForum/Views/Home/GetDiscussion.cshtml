@@ -2,9 +2,11 @@
 
 @{
     ViewData["Title"] = "Discussion Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use layout that includes the footer
+    ViewData["HideFooter"] = "true"; // This will hide the footer on this page
 }
 
-<div>
+<div class="container flex-grow-1">
     <h1>@Model.Title</h1>
     <p>@Model.Content</p>
 
@@ -13,7 +15,7 @@
     <dl class="row">
         <dt class="col-sm-2">Image:</dt>
         <dd class="col-sm-10">
-            <img src="@Url.Content("/images/" + Model.ImageFilename)" alt="Discussion Image" style="max-width: 100%; height: auto;" />
+            <img src="@Url.Content("/images/" + Model.ImageFilename)" alt="Discussion Image" class="discussion-image" />
         </dd>
 
         <dt class="col-sm-2">Created At:</dt>
@@ -23,7 +25,7 @@
     </dl>
 </div>
 
-<div>
+<div class="container">
     <div class="mt-4">
         <a asp-controller="Comments" asp-action="Create" asp-route-id="@Model.DiscussionId" class="btn btn-warning">Add Comment</a>
     </div>
@@ -35,7 +37,6 @@
         <ul class="list-group">
             @foreach (var comment in Model.Comments)
             {
-
                 <li class="list-group-item">
                     <p><strong>@comment.Author:</strong> @comment.Content</p>
                     <p class="text-muted small">@comment.CommentDate.ToString("MMMM dd, yyyy h:mm tt")</p>
@@ -49,10 +50,6 @@
     }
 </div>
 
-
-
-<div class="mt-4">
-    
-    
+<div class="container mt-4">
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
