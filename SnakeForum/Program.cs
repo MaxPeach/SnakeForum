@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SnakeForum.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SnakeForumContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SnakeForumContext") ?? throw new InvalidOperationException("Connection string 'SnakeForumContext' not found.")));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<SnakeForumContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -30,5 +33,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+app.MapRazorPages().WithStaticAssets();
 app.Run();
