@@ -61,12 +61,7 @@ namespace SnakeForum.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Location")]
             public string Location { get; set; }
             
-            [Display(Name = "Profile Picture")]
-            public string ImageFilename { get; set; } 
-
-            [NotMapped]
-            [Display(Name = "Profile Picture")]
-            public IFormFile? ImageFile { get; set; } // Optional file upload
+           
 
             //changes end////////////////////////////////////
 
@@ -92,8 +87,7 @@ namespace SnakeForum.Areas.Identity.Pages.Account.Manage
                 ////////////////////////////////////
                 Name = userName,
                 Location = user.Location,
-                ImageFilename = user.ImageFilename,
-                ImageFile = user.ImageFile,
+                
                 ////////////////////////////////////
                 PhoneNumber = phoneNumber
             };
@@ -140,19 +134,13 @@ namespace SnakeForum.Areas.Identity.Pages.Account.Manage
             if (Input.Name != user.Name)
             { 
                 user.Name = Input.Name;
+
             }
             if (Input.Location != user.Location)
             {
                 user.Location = Input.Location;
             }
-            if (Input.ImageFile != user.ImageFile)
-            {
-                user.ImageFile = Input.ImageFile;
-            }
-            if (Input.ImageFilename != user.ImageFilename)
-            {
-                user.ImageFilename = Input.ImageFilename;
-            }
+            
 
             await _userManager.UpdateAsync(user);
             ///////////////////////////////////////////////

@@ -98,6 +98,11 @@ namespace SnakeForum.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //////////////////////////
+            [DataType(DataType.Text)]
+            public string Location { get; set; } = string.Empty;
+
         }
 
 
@@ -117,6 +122,10 @@ namespace SnakeForum.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                // ✅ Ensure Location is assigned to the user before saving
+                user.Location = Input.Location;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -154,6 +163,7 @@ namespace SnakeForum.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         private ApplicationUser CreateUser()
         {
