@@ -1,4 +1,8 @@
-﻿namespace SnakeForm.Models
+﻿using Humanizer;
+using Microsoft.EntityFrameworkCore.Migrations;
+using SnakeForum.Data;
+
+namespace SnakeForm.Models
 {
     public class Comment
     {
@@ -13,6 +17,14 @@
 
         // Navigation Property
         public Discussion? Discussion { get; set; } //make nullable
+
+        // Foreign key (AspNetUsers table)
+        public string ApplicationUserId { get; set; } = string.Empty;
+
+        // Navigation property
+        public ApplicationUser? ApplicationUser { get; set; } // nullable!!!
+
+
     }
 
 }

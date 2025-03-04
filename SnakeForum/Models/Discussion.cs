@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authorization;
+using SnakeForum.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SnakeForm.Models
 {
+    
     public class Discussion
     {
+
         //primary key
 
         public int DiscussionId { get; set; }
@@ -21,6 +25,13 @@ namespace SnakeForm.Models
 
         // Navigation Property
         public List<Comment>? Comments { get; set; } //make nullable
-  
-}
+
+        // Foreign key (AspNetUsers table)
+        public string ApplicationUserId { get; set; } = string.Empty;
+
+        // Navigation property
+        public ApplicationUser? ApplicationUser { get; set; } // nullable!!!
+
+
+    }
 }
