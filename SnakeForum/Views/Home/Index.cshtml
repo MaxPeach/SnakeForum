@@ -16,10 +16,12 @@
                     <!-- Image Thumbnail -->
                     <div class="col-md-2">
                         <td>
-                        <img src="/images/@item.ImageFilename" alt="@item.Content" class="img-thumbnail">
+                        <img src="/images/@item.ImageFilename" alt="@item.Title" class="img-thumbnail">
                         </td>
                     </div>
-
+                    <div>
+                        @item.ApplicationUser.Name <img src="/profile_img/@item.ApplicationUser.ImageFilename" alt="@item.ApplicationUser.Name" class="profile-thumbnail">
+                    </div>
                     <!-- Discussion Details -->
                     <div class="col-md-10">
                         <div class="card-body">

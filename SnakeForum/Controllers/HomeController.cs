@@ -24,7 +24,9 @@ namespace SnakeForum.Controllers
         public async Task<IActionResult> Index()
         {
             var discussions = await _context.Discussion
+                .Include(m => m.ApplicationUser) //discussion
                 .Include(d => d.Comments)  // Include comments to count them
+                    .ThenInclude(d => d.ApplicationUser)  // Include comments to count them
                 .OrderByDescending(d => d.CreateDate) // Sort by newest first
                 .ToListAsync();
 
@@ -36,7 +38,9 @@ namespace SnakeForum.Controllers
         {
             var discussion = await _context.Discussion
                 .Include(d => d.Comments) // Include related comments
+                .ThenInclude(c =>  c.ApplicationUser)
                 .FirstOrDefaultAsync(d => d.DiscussionId == id);
+                
 
             if (discussion == null)
             {

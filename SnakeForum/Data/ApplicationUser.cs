@@ -13,7 +13,5 @@ namespace SnakeForum.Data
         [PersonalData]
         public string ImageFilename { get; set; } = string.Empty;
 
-        [NotMapped]
-        public IFormFile? ImageFile { get; set; } // Allows file upload
     }
 }

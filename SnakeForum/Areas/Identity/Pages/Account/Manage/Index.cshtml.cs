@@ -60,8 +60,12 @@ namespace SnakeForum.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Location")]
             public string Location { get; set; }
-            
-           
+
+            [Display(Name = "Profile Picture")]
+            public IFormFile ImageFile { get; set; }
+
+
+
 
             //changes end////////////////////////////////////
 
@@ -140,7 +144,22 @@ namespace SnakeForum.Areas.Identity.Pages.Account.Manage
             {
                 user.Location = Input.Location;
             }
-            
+
+            // save the uploaded profile picture in db and folder
+            if (Input.ImageFile != null)
+            {
+                string imageFilename = Guid.NewGuid().ToString() + Path.GetExtension(Input.ImageFile?.FileName);
+
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "profile_img", imageFilename);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Input.ImageFile.CopyToAsync(fileStream);
+                }
+
+                user.ImageFilename = imageFilename; // change the filename 
+            }
+
 
             await _userManager.UpdateAsync(user);
             ///////////////////////////////////////////////

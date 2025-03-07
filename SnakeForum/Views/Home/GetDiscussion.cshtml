@@ -34,11 +34,12 @@
     <hr />
     @if (Model.Comments != null && Model.Comments.Any())
     {
+
         <ul class="list-group">
             @foreach (var comment in Model.Comments)
             {
                 <li class="list-group-item">
-                    <p><strong>@comment.Author:</strong> @comment.Content</p>
+                    <p><strong>@comment.ApplicationUser.Name</strong> @comment.Content</p>
                     <p class="text-muted small">@comment.CommentDate.ToString("MMMM dd, yyyy h:mm tt")</p>
                 </li>
             }

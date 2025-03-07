@@ -103,6 +103,9 @@ namespace SnakeForum.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             public string Location { get; set; } = string.Empty;
 
+            [Display(Name = "Profile Picture")]
+            public IFormFile ImageFile { get; set; }
+
         }
 
 
@@ -118,7 +121,26 @@ namespace SnakeForum.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+
+               
                 var user = CreateUser();
+
+               
+
+                ///save uploaded profile picture
+                if (Input.ImageFile != null)
+                {
+                    string ImageFilename = Guid.NewGuid().ToString() + Path.GetExtension(Input.ImageFile?.FileName);
+
+                    string filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "profile_img",ImageFilename);
+
+                    using (var fileStream = new FileStream(filepath, FileMode.Create))
+                    { 
+                        await Input.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    user.ImageFilename = ImageFilename;
+                }
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
