@@ -7,81 +7,91 @@ html, body {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
     color: #343a40;
-    flex: 1; /* Allow the content to grow and fill the space */
+    flex: 1; /* Allow body to grow */
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 /* Navbar Styles */
 .navbar {
-    background-color: #007bff !important;
+    background-color: #28a745 !important; /* Green Navbar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
 
     .navbar .navbar-brand, .navbar .nav-link {
         color: #ffffff !important;
+        font-weight: 500;
     }
+
+    .navbar .navbar-toggler-icon {
+        background-color: white;
+    }
+
+/* Profile Picture Styles */
+.profile-thumbnail {
+    width: 50px; /* Small profile image */
+    height: 50px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    margin-right: 10px; /* Adds spacing between the image and the text */
+}
 
 /* Container Styles */
 .container {
-    max-width: 900px;
-    margin: 20px auto;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex-grow: 1; /* Allow the container to grow and take available space */
-}
-
-/* Form Styles */
-.form-control {
-    border-radius: 5px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    transition: background 0.3s;
-}
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-/* Table Styles */
-.table {
+    flex-grow: 1; /* Allow the container to grow and take up available space */
+    max-width: 1100px; /* Set max-width to prevent content from stretching too wide */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 30px 20px; /* Add padding around the content */
     background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-    .table th {
-        background-color: #007bff;
-        color: white;
-    }
-
-/* Comments Section */
+/* List Group Styles */
 .list-group-item {
     border-radius: 5px;
     background-color: #f8f9fa;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
-/* Image Styling for Details Page */
-.discussion-image {
-    width: 300px; /* Adjust this size as needed */
-    height: 300px; /* Maintain consistent aspect ratio */
-    object-fit: cover; /* Ensure the image fits nicely within the set dimensions */
-    display: block;
-    margin: 20px auto;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Card Styles (If using cards in content) */
+.card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Footer Styles */
-.footer {
-    flex-grow: 1;
-    background-color: #343a40;
+.card-header {
+    background-color: #28a745;
     color: white;
-    padding: 10px 0;
-    text-align: center;
-    margin-top: auto; /* Push the footer to the bottom */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card-body {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .navbar {
+        padding: 10px 0;
+    }
+
+    
+
+
+    
 }
